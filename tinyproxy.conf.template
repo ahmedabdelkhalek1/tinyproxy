@@ -1,0 +1,22 @@
+# Run as the non-root user created in the image
+User tinyproxy
+Group nogroup
+
+# Will be set from $PORT at container start
+Port __PORT__
+Bind 0.0.0.0
+
+# Sensible limits
+Timeout 600
+MaxClients 100
+StartServers 1
+
+# Basic authentication; values injected via env
+BasicAuth __USER__ __PASS__
+
+# IMPORTANT: lock down who can use your proxy (change to your IPs/subnets)
+# If any Allow/Deny is present, all others are denied
+Allow 0.0.0.0/0
+
+# Log to stderr so logs appear in Render dashboard
+Logfile "/dev/stderr"
